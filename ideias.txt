@@ -1,5 +1,6 @@
 Minhas anotacoes secretas e ideias de projeto
 
 ## Ideias de Projetos Praticos
-- Projeto 01: Criar um portfólio profissional no GitHub com documentação completa.
+- Projeto 01: Aplicativo Mobile com Flutter para controle financeiro.
 - Projeto 02: Pipeline automatizada com GitHub Actions.
+
