@@ -1,5 +1,7 @@
 Minhas anotacoes secretas e ideias de projeto
 
 ## Ideias de Projetos Praticos
-- - Projeto 01: Dashboard de Inteligência Artificial para análise preditiva.
+- Projeto 01: Dashboard de Inteligência Artificial para análise preditiva.
 - Projeto 02: Pipeline automatizada com GitHub Actions.
+- Projeto 03: Aplicativo Mobile com Flutter para controle financeiro.
+
