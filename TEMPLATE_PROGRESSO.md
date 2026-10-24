@@ -1,6 +1,6 @@
 # REGISTRO DE PROGRESSO — PROFESSOR IA
 
-> Atualizado em: 19/10/2026
+> Atualizado em: 24/10/2026
 
 ## 1. Identificação da trilha
 
@@ -12,7 +12,7 @@
 - **Objetivo final:** Dominar controle de versões local e na nuvem, gerenciar projetos e colaborar profissionalmente.
 - **Data de início:** 12/10/2026
 - **Nível inicial:** Zero absoluto
-- **Nível atual:** Nível 4 — Avançado (Dominando Colaboração e Pull Requests!)
+- **Nível atual:** Nível 4 — Avançado (Dominando Conflitos de Merge e Colaboração!)
 
 ---
 
@@ -23,7 +23,7 @@
 | **Nível 1 — Fundamentos** | Módulo 01: Conceitos & Primeiros Passos | Entender controle de versão, Git vs GitHub, commits, repositórios e identidade | **Dominado** |
 | **Nível 2 — Iniciante funcional** | Módulo 02: Ciclo de Vida Local & Histórico | `git init`, `git status`, `git add`, `git commit`, `git log`, `git diff`, `.gitignore` | **Dominado** |
 | **Nível 3 — Intermediário** | Módulo 03: Nuvem & Linhas do Tempo | Conexão remota (`git remote`), `git push`, criação de branches (`git switch -c`), merge (`git merge`), exclusão de branch | **Dominado** |
-| **Nível 4 — Avançado** | Módulo 04: Colaboração & Boas Práticas | Pull Requests, Forks, Issues, Resolução de conflitos de merge, Git Flow | **Em andamento** |
+| **Nível 4 — Avançado** | Módulo 04: Colaboração & Boas Práticas | Pull Requests, Forks, Issues, Resolução de conflitos de merge, Git Flow | **Em andamento (Quase completo!)** |
 | **Nível 5 — Especialização** | Módulo 05: Portfólio & Automações | Rebase, Stash, GitHub Actions (CI/CD) e Portfólio profissional | Não iniciado |
 
 ---
@@ -56,6 +56,10 @@
 - **Objetivos:** Isolar alterações em feature branch, enviar branch remota (`git push -u origin <branch>`), abrir e inspecionar Pull Request no GitHub, entender revisão/sugestões de código, realizar merge na nuvem, puxar alterações com `git pull` e deletar branch integrada (`git branch -d`).
 - **Resultado:** Criou a branch `feat-ideia-projeto`, comitou novas ideias em `ideias.txt`, subiu a branch isolada, abriu o PR #1 no GitHub, compreendeu a dinâmica de code review, realizou o merge na nuvem e puxou para a `main` local com `git pull origin main`. Deletou a branch remota e local com sucesso.
 
+### Aula 09 — Conflitos de Merge na Prática: Quando duas alterações colidem
+- **Objetivos:** Compreender a causa raiz de conflitos (mesma linha alterada em branches distintas), entender a proteção do Git contra perda silenciosa de dados, identificar marcadores (`<<<<<<< HEAD`, `=======`, `>>>>>>>`), resolver manualmente integrando ideias, usar `git add` para marcar resolução e consolidar com Merge Commit. Visualizar histórico ramificado (`git log --graph`).
+- **Resultado:** Provocou intencionalmente colisão de ideias no `ideias.txt`, inspecionou os marcadores, integrou ambas as propostas (Dashboard de IA como Projeto 01 e App Mobile como Projeto 03), marcou a resolução com `git add`, selou o merge commit `97384d7`, visualizou o grafo de bifurcação e sincronizou com sucesso no GitHub.
+
 ---
 
 ## 4. Matriz de domínio
@@ -80,6 +84,9 @@
 | Fusão na Nuvem (Merge Pull Request) | Dominado | Executou o merge do PR #1 diretamente no GitHub |
 | Puxar alterações remotas (`git pull`) | Dominado | Sincronizou a `main` local com as alterações da nuvem |
 | Exclusão segura de branch (`git branch -d`) | Dominado | Removeu o galho integrado sem perda de dados |
+| Resolução de Conflito de Merge | Dominado | Identificou marcadores, integrou propostas concorrentes e concluiu merge commit |
+| Visualização em Grafo (`git log --graph`) | Dominado | Inspecionou a convergência geométrica dos ramos no terminal |
+| Abortar Merge de emergência (`git merge --abort`) | Dominado | Compreendeu como cancelar com segurança operações de merge complexas |
 
 ---
 
@@ -92,8 +99,8 @@ Assunto: Git & GitHub
 Aluno: Vlaudimir Marques (vlaudimirdm@gmail.com)
 GitHub: vlaudimirdm-ship-it
 Repositório: https://github.com/vlaudimirdm-ship-it/Skill_Teacher
-Nível alcançado: Nível 4 — Avançado (Dominando Colaboração e Pull Requests!)
-Aulas concluídas: Aulas 01 a 08
-Competências demonstradas: git init, git status, git add, git commit, git diff, git log, .gitignore, git remote, git push, git branch, git switch -c, git switch, git merge, git push origin <branch>, Pull Request (PR), Merge PR, git pull, git branch -d.
-Próxima aula recomendada: Aula 09 — Conflitos de Merge na Prática: Quando duas alterações colidem e como resolver com segurança
+Nível alcançado: Nível 4 — Avançado (Dominando Conflitos de Merge e Colaboração!)
+Aulas concluídas: Aulas 01 a 09
+Competências demonstradas: git init, git status, git add, git commit, git diff, git log, .gitignore, git remote, git push, git branch, git switch -c, git switch, git merge, git push origin <branch>, Pull Request (PR), Merge PR, git pull, git branch -d, Resolução de Conflitos, git log --graph, git merge --abort.
+Próxima aula recomendada: Aula 10 — Boas Práticas de Colaboração em Equipe: Git Flow, Convenções de Commits e Gestão com Issues no GitHub
 ```
