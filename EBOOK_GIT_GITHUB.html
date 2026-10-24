@@ -390,9 +390,10 @@
         <li><strong>Capítulo 6: Conectando com a Nuvem (git remote e git push)</strong> <span>11</span></li>
         <li><strong>Capítulo 7: Linhas do Tempo Paralelas (Branches e Merge Local)</strong> <span>12</span></li>
         <li><strong>Capítulo 8: Trabalho em Equipe Profissional (Pull Requests e git pull)</strong> <span>14</span></li>
-        <li><strong>Capítulo 9: Segurança, No-Code e Prevenção de Código Malicioso</strong> <span>16</span></li>
-        <li><strong>Capítulo 10: O Guia Rápido de Bolso (Cheat Sheet Completo)</strong> <span>17</span></li>
-        <li><strong>Epílogo: Próximos Passos (Aula 09 e Conflitos de Merge)</strong> <span>18</span></li>
+        <li><strong>Capítulo 9: O Bicho-Papão Desmistificado (Conflitos de Merge)</strong> <span>16</span></li>
+        <li><strong>Capítulo 10: Segurança, No-Code e Prevenção de Código Malicioso</strong> <span>18</span></li>
+        <li><strong>Capítulo 11: O Guia Rápido de Bolso (Cheat Sheet Completo)</strong> <span>19</span></li>
+        <li><strong>Epílogo: Próximos Passos (Aula 10: Git Flow e Convenções)</strong> <span>20</span></li>
       </ul>
     </div>
 
@@ -835,9 +836,100 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
 
   <!-- CAPÍTULO 9 -->
   <div class="chapter">
-    <h1 class="chapter-title">Capítulo 9: Segurança, No-Code e Prevenção de Malware</h1>
+    <h1 class="chapter-title">Capítulo 9: O Bicho-Papão Desmistificado (Conflitos de Merge)</h1>
     
-    <h2>9.1 O Dilema de Segurança no Mundo No-Code</h2>
+    <h2>9.1 O que é o Conflito de Merge e Por que ele Acontece?</h2>
+    <p>
+      Até a Aula 08, todas as vezes que unimos branches, o Git executou tudo no piloto automático (o chamado <em>Fast-Forward</em> ou merge limpo). 
+      Isso aconteceu porque ninguém alterou as mesmas linhas ao mesmo tempo.
+    </p>
+    <p>
+      Mas no mundo real com equipes de desenvolvimento, o conflito é inevitável — e ele <strong>não é um erro</strong>, mas sim uma <strong>ferramenta de proteção vital</strong>!
+    </p>
+
+    <div class="callout callout-warning">
+      <strong>🚨 O Perigo do "Último que Salvar Ganha":</strong>
+      Em sistemas simples de arquivos ou nuvens comuns, se duas pessoas alteram o mesmo arquivo, quem salvar por último sobrescreve silenciosamente o trabalho da outra. 
+      No desenvolvimento de software, isso poderia apagar horas de trabalho, quebrar regras de negócio ou introduzir bugs financeiros catastróficos.
+    </div>
+
+    <div class="callout callout-analogy">
+      <strong>🛡️ A Filosofia do Git: "Não sei, não chuto!"</strong>
+      O Git nunca perde dados silenciosamente. Quando ele vê que o Desenvolvedor A alterou a linha 4 para "Dashboard de IA" e o Desenvolvedor B alterou a mesmíssima linha 4 para "Aplicativo Mobile", ele diz:
+      <em>"Eu sou apenas um computador, não sei quem tem razão. Não vou apagar o código de ninguém. Vou travar a fusão e pedir que o humano decida!"</em>.
+    </div>
+
+    <h2>9.2 A Anatomia dos Marcadores de Conflito</h2>
+    <p>Quando o Git detecta o conflito, ele insere marcadores visuais no próprio arquivo:</p>
+
+    <pre>
+<span class="cmd">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span> <span class="comment">(O que você tem na branch onde está pisando agora - ex: main)</span>
+- Projeto 01: Dashboard de Inteligência Artificial para análise preditiva.
+<span class="cmd">=======</span> <span class="comment">(A cerca que divide as duas realidades concorrentes)</span>
+- Projeto 01: Aplicativo Mobile com Flutter para controle financeiro.
+<span class="cmd">&gt;&gt;&gt;&gt;&gt;&gt;&gt; teste-conflito</span> <span class="comment">(O que veio da outra branch que tentamos fundir)</span>
+    </pre>
+
+    <h2>9.3 A Resolução Integradora: O Melhor dos Dois Mundos</h2>
+    <p>
+      Diante de um conflito, o desenvolvedor não é obrigado a jogar uma ideia no lixo. 
+      Como demonstrado na prática da Aula 09 por Vlaudimir Marques, uma postura de liderança técnica muitas vezes 
+      consiste em <strong>integrar ambas as ideias</strong>:
+    </p>
+    <ul>
+      <li>O <em>Dashboard de IA</em> foi mantido como Projeto 01;</li>
+      <li>A sugestão do <em>Aplicativo Mobile</em> foi incorporada como Projeto 03!</li>
+    </ul>
+
+    <h2>9.4 O Passo a Passo da Resolução</h2>
+    <pre>
+<span class="comment"># 1. Abrir o arquivo no editor, apagar os marcadores (&lt;&lt;&lt;&lt;, ====, &gt;&gt;&gt;&gt;) e deixar o texto final limpo</span>
+
+<span class="comment"># 2. Salvar com Cmd + S</span>
+
+<span class="comment"># 3. Marcar o arquivo como RESOLVIDO avisando ao Git</span>
+<span class="cmd">git add</span> ideias.txt
+
+<span class="comment"># 4. Concluir a fusão com o Merge Commit</span>
+<span class="cmd">git commit</span> <span class="flag">-m</span> <span class="str">"merge: resolve conflito incorporando projetos de IA e Mobile"</span>
+    </pre>
+
+    <h2>9.5 Visualizando a Convergência em Grafo</h2>
+    <p>
+      Para auditar visualmente a união dos dois galhos que divergiram e se encontraram no Merge Commit, 
+      utilizamos a flag <code>--graph</code>:
+    </p>
+    <pre>
+<span class="cmd">git log</span> <span class="flag">--graph --oneline -n 6</span>
+
+<span class="out">*   97384d7 (HEAD -> main) merge: resolve conflito incorporando projetos de IA e Mobile
+|\  
+| * c0f6675 (teste-conflito) feat: altera projeto 01 para app mobile
+* | d01a968 feat: altera projeto 01 para dashboard de IA
+|/  
+* 6d04347 docs: adiciona ebook e guia pratico em html e pdf</span>
+    </pre>
+
+    <div class="callout callout-tip">
+      <strong>🚨 O Botão de Pânico: <code>git merge --abort</code></strong><br>
+      Se um dia no trabalho você tentar um merge que resulte em dezenas de conflitos caóticos e você quiser "abortar a missão" 
+      e retornar imediatamente ao estado limpo anterior sem qualquer dano, basta executar:
+      <br><code>git merge --abort</code>!
+    </div>
+
+    <div class="callout callout-analogy">
+      <strong>📝 O Paralelo com o Google Docs (A Sacada de Vlaudimir):</strong>
+      Assim como no <em>Modo Sugestão</em> do Google Docs você pode ler, comentar e clicar em aceitar ou rejeitar alterações sem que 
+      um colaborador digite por cima do outro, o Git/GitHub funciona como uma versão hiper-sofisticada de gestão de sugestões, 
+      com histórico imutável e proteção contra atropelamento de linhas.
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 10 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 10: Segurança, No-Code e Prevenção de Malware</h1>
+    
+    <h2>10.1 O Dilema de Segurança no Mundo No-Code</h2>
     <p>
       Se você trabalha com ferramentas No-Code, automações ou está iniciando em programação, pode surgir a dúvida: 
       <em>"Como me protejo se alguém tentar mandar um código malicioso ou vírus disfarçado de contribuição no GitHub?"</em>.
@@ -849,7 +941,7 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
       O código de terceiros fica em quarentena na aba do Pull Request aguardando seu veredito.
     </div>
 
-    <h2>9.2 Os 4 Sinais Vermelhos na Aba *Files Changed*</h2>
+    <h2>10.2 Os 4 Sinais Vermelhos na Aba *Files Changed*</h2>
     <p>Antes de clicar em <em>Merge</em> em qualquer contribuição de terceiros, abra a aba <strong>Files changed</strong> e observe:</p>
     <ul>
       <li><strong>Arquivos Executáveis ou Ocultos:</strong> Desconfie na hora se o PR adicionou arquivos como <code>.exe</code>, <code>.bat</code>, <code>.sh</code>, <code>.bin</code> ou arquivos zipados. Projetos colaborativos normais só compartilham código-fonte legível.</li>
@@ -858,7 +950,7 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
       <li><strong>Código Ilegível / Ofuscado:</strong> Blocos de texto que parecem códigos criptografados sem explicação lógica são clássicos de injeção maliciosa.</li>
     </ul>
 
-    <h2>9.3 A IA como sua Perita de Segurança</h2>
+    <h2>10.3 A IA como sua Perita de Segurança</h2>
     <p>
       Não precisa ser um hacker para se defender. Você pode simplesmente copiar o código que a pessoa sugeriu na aba <em>Files changed</em>, 
       abrir sua IA de confiança e pedir:
@@ -868,9 +960,9 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
     </div>
   </div>
 
-  <!-- CAPÍTULO 10 -->
+  <!-- CAPÍTULO 11 -->
   <div class="chapter">
-    <h1 class="chapter-title">Capítulo 10: O Guia Rápido de Bolso (Cheat Sheet)</h1>
+    <h1 class="chapter-title">Capítulo 11: O Guia Rápido de Bolso (Cheat Sheet Completo)</h1>
     
     <p>Guarde esta tabela. Ela contém os comandos essenciais na ordem em que você os utilizará no seu dia a dia profissional:</p>
 
@@ -886,7 +978,7 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
         <tr>
           <td><code>git status</code></td>
           <td>Mostra o estado atual dos arquivos</td>
-          <td>A qualquer momento, para saber o que está modificado ou pronto.</td>
+          <td>A qualquer momento, para saber o que está modificado, pronto ou em conflito.</td>
         </tr>
         <tr>
           <td><code>git diff</code></td>
@@ -895,18 +987,23 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
         </tr>
         <tr>
           <td><code>git add &lt;arquivo&gt;</code></td>
-          <td>Move o arquivo para o palco (Staging)</td>
-          <td>Quando você preparou uma alteração e quer incluí-la no commit.</td>
+          <td>Move para o palco ou marca conflito como resolvido</td>
+          <td>Para preparar um commit ou marcar que você resolveu um conflito.</td>
         </tr>
         <tr>
           <td><code>git commit -m "msg"</code></td>
           <td>Grava a foto oficial permanente no histórico</td>
-          <td>Sempre que concluir uma pequena unidade lógica de trabalho.</td>
+          <td>Sempre que concluir uma pequena unidade lógica de trabalho ou merge.</td>
         </tr>
         <tr>
           <td><code>git log --oneline</code></td>
           <td>Exibe a linha do tempo resumida dos commits</td>
           <td>Para auditar o histórico e ver os identificadores (hashes).</td>
+        </tr>
+        <tr>
+          <td><code>git log --graph --oneline</code></td>
+          <td>Desenha o grafo visual das ramificações</td>
+          <td>Para enxergar bifurcações e convergências de branches paralelas.</td>
         </tr>
         <tr>
           <td><code>git switch -c &lt;nome&gt;</code></td>
@@ -929,6 +1026,16 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
           <td>Depois de aprovar um PR no GitHub ou ao iniciar o dia de trabalho.</td>
         </tr>
         <tr>
+          <td><code>git merge &lt;branch&gt;</code></td>
+          <td>Funde o trabalho de outro galho no galho atual</td>
+          <td>Para consolidar funcionalidades na <code>main</code>.</td>
+        </tr>
+        <tr>
+          <td><code>git merge --abort</code></td>
+          <td>Aborta a fusão em caso de conflito caótico</td>
+          <td>Quando o conflito for confuso e você preferir voltar ao estado anterior limpo.</td>
+        </tr>
+        <tr>
           <td><code>git branch -d &lt;nome&gt;</code></td>
           <td>Deleta o galho local com segurança</td>
           <td>Depois que o merge já tiver sido concluído e sincronizado.</td>
@@ -939,34 +1046,25 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
 
   <!-- EPÍLOGO -->
   <div class="chapter">
-    <h1 class="chapter-title">Epílogo: Próximos Passos (Aula 09)</h1>
+    <h1 class="chapter-title">Epílogo: Próximos Passos (Aula 10)</h1>
     
-    <h2>O Que Nos Espera: O Conflito de Merge!</h2>
+    <h2>O Que Nos Espera: Boas Práticas e Git Flow Profissional</h2>
     <p>
-      Até agora, todas as fusões que realizamos foram suaves e automáticas (o chamado <em>Fast-Forward</em> ou merge limpo do GitHub). 
-      Isso aconteceu porque ninguém mexeu na mesma linha que você ao mesmo tempo.
+      Com a conclusão da Aula 09, você dominou toda a mecânica essencial do Git: 
+      criação, versionamento, sincronização em nuvem, Pull Requests, Code Review e Resolução de Conflitos.
     </p>
     <p>
-      Mas o que acontece quando:
+      Na <strong>Aula 10</strong>, vamos aprender como os times profissionais organizam a casa para trabalhar em larga escala:
     </p>
     <ul>
-      <li>O <strong>Desenvolvedor A</strong> altera a linha 5 do arquivo para dizer: <em>"Cor de fundo: Azul"</em>;</li>
-      <li>E simultaneamente o <strong>Desenvolvedor B</strong> altera a mesma linha 5 para dizer: <em>"Cor de fundo: Verde"</em>?</li>
+      <li><strong>Conventional Commits:</strong> Como padronizar mensagens para que qualquer sênior ou robô entenda o histórico (ex: <code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>refactor:</code>, <code>chore:</code>);</li>
+      <li><strong>Gestão com Issues no GitHub:</strong> Como abrir chamados, documentar bugs e planejar tarefas usando cartões visuais conectados aos Pull Requests;</li>
+      <li><strong>O Modelo Git Flow:</strong> Como empresas organizam galhos de desenvolvimento (<code>develop</code>), funcionalidades (<code>feature/*</code>), correções urgentes (<code>hotfix/*</code>) e versões oficiais de produção (<code>main</code>).</li>
     </ul>
 
-    <p>
-      O Git não é adivinho. Ele não pode chutar qual das duas ideias é a correta. 
-      Ele para o processo, levanta uma bandeira e diz: <strong>CONFLITO DE MERGE!</strong>
-    </p>
-    <p>
-      Na <strong>Aula 09</strong>, vamos provocar um conflito intencional de merge, inspecionar os marcadores de conflito 
-      (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) e aprender a resolvê-lo 
-      com calma, elegância e segurança profissional.
-    </p>
-
     <div class="callout callout-tip" style="text-align: center; margin-top: 30px;">
-      <strong>Fim da Parte I — Do Zero ao Avançado</strong><br>
-      <em>"O domínio não vem da memorização de comandos, mas da compreensão da linha do tempo."</em>
+      <strong>Fim da Lição 09 — Do Zero ao Avançado</strong><br>
+      <em>"O domínio não vem da memorização de comandos, mas da compreensão da linha do tempo e do respeito à colaboração."</em>
     </div>
   </div>
 

@@ -158,7 +158,9 @@ Atualize um resumo textual contendo:
 - dificuldades identificadas;
 - conceitos que precisam ser revisados;
 - exercícios realizados;
-- próximo passo recomendado.
+- próximo passo recomendado;
+- atualização imediata do eBook (`EBOOK_GIT_GITHUB.html` e `Guia_Git_GitHub_Do_Zero_ao_Avancado.pdf`) para incorporar a nova lição.
+
 
 ## 6. Sistema de avaliação e progressão
 
