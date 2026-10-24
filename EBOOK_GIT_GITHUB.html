@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Git & GitHub: Do Zero ao Avançado — Guia Prático & Manual de Bordo</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+      @bottom-right {
+        content: counter(page);
+        font-size: 9pt;
+        color: #64748b;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      font-size: 10.5pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    /* CAPA DO EBOOK */
+    .cover {
+      page-break-after: always;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 20px;
+      text-align: center;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      color: #ffffff;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      align-self: center;
+      background: rgba(99, 102, 241, 0.25);
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      color: #a5b4fc;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 10pt;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
+    .cover-header h1 {
+      font-size: 32pt;
+      line-height: 1.15;
+      margin: 25px 0 12px 0;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #ffffff, #c7d2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-header h2 {
+      font-size: 14pt;
+      font-weight: 400;
+      color: #cbd5e1;
+      max-width: 580px;
+      margin: 0 auto 30px auto;
+      line-height: 1.4;
+    }
+
+    .cover-illustration {
+      margin: 30px auto;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      max-width: 480px;
+      text-align: left;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9.5pt;
+      color: #38bdf8;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .cover-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .cover-meta {
+      display: flex;
+      justify-content: space-around;
+      font-size: 9.5pt;
+      color: #94a3b8;
+    }
+
+    .cover-meta strong {
+      color: #f8fafc;
+      display: block;
+      font-size: 11pt;
+      margin-top: 4px;
+    }
+
+    /* ESTRUTURA GERAL */
+    h1, h2, h3, h4 {
+      color: #0f172a;
+      font-weight: 700;
+      page-break-after: avoid;
+    }
+
+    h1.chapter-title {
+      font-size: 20pt;
+      border-bottom: 2px solid #4f46e5;
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: #1e1b4b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chapter {
+      page-break-before: always;
+      padding-top: 10px;
+    }
+
+    .no-break-top {
+      page-break-before: auto;
+    }
+
+    h2 {
+      font-size: 13.5pt;
+      color: #334155;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      border-left: 4px solid #6366f1;
+      padding-left: 10px;
+    }
+
+    h3 {
+      font-size: 11pt;
+      color: #475569;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 0 0 10px 0;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin: 0 0 12px 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    /* CAIXAS DE DESTAQUE / CALLOUTS */
+    .callout {
+      margin: 14px 0;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 10pt;
+      page-break-inside: avoid;
+    }
+
+    .callout-analogy {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 5px solid #16a34a;
+      color: #14532d;
+    }
+
+    .callout-analogy strong {
+      color: #15803d;
+    }
+
+    .callout-tip {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-left: 5px solid #4f46e5;
+      color: #312e81;
+    }
+
+    .callout-tip strong {
+      color: #4338ca;
+    }
+
+    .callout-warning {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 5px solid #d97706;
+      color: #78350f;
+    }
+
+    .callout-warning strong {
+      color: #b45309;
+    }
+
+    .callout-security {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 5px solid #dc2626;
+      color: #7f1d1d;
+    }
+
+    /* CÓDIGO E TERMINAL */
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      font-size: 9pt;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      font-size: 9pt;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin: 10px 0;
+      page-break-inside: avoid;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    pre .comment { color: #94a3b8; font-style: italic; }
+    pre .cmd { color: #38bdf8; font-weight: bold; }
+    pre .flag { color: #f472b6; }
+    pre .str { color: #4ade80; }
+    pre .out { color: #cbd5e1; }
+
+    /* TABELAS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* BADGES */
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-mastered {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+
+    .badge-progress {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    /* SUMÁRIO */
+    .toc {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin-bottom: 8px;
+      font-size: 10pt;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted #cbd5e1;
+      padding-bottom: 4px;
+    }
+
+    .toc li a {
+      color: #334155;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CAPA -->
+  <div class="cover">
+    <div class="cover-badge">Guia de Aprendizagem & Manual de Bordo</div>
+    <div class="cover-header">
+      <h1>Git & GitHub<br>Do Zero ao Avançado</h1>
+      <h2>O manual prático, intuitivo e definitivo para dominar controle de versões local, colaboração em equipe e gestão de riscos em código.</h2>
+      
+      <div class="cover-illustration">
+        <span style="color:#64748b;">// A trilha percorrida por Vlaudimir Marques</span><br>
+        $ git init <span style="color:#64748b;"># Fundamentos & 3 Estados</span><br>
+        $ git commit -m "feat: histórico criado"<br>
+        $ git switch -c feat-ideia-projeto <span style="color:#64748b;"># Isolamento</span><br>
+        $ git push -u origin feat-ideia-projeto<br>
+        <span style="color:#4ade80;">✔ PR #1 Merged na nuvem (GitHub)</span><br>
+        $ git pull origin main <span style="color:#38bdf8;"># Ciclo fechado com maestria!</span>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div class="cover-meta">
+        <div>
+          <span>Autor & Aluno:</span>
+          <strong>Vlaudimir Marques</strong>
+        </div>
+        <div>
+          <span>Mentoria Pedagógica:</span>
+          <strong>Professor IA (Skill Teacher)</strong>
+        </div>
+        <div>
+          <span>Progresso Atual:</span>
+          <strong>Nível 4 (Avançado)</strong>
+        </div>
+        <div>
+          <span>Data de Conclusão:</span>
+          <strong>Outubro / 2026</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMÁRIO & INTRODUÇÃO -->
+  <div class="chapter no-break-top">
+    <h1 class="chapter-title">📑 Sumário Executivo</h1>
+    
+    <div class="toc">
+      <ul>
+        <li><strong>Prefácio & A Filosofia do Aprendizado Ativo</strong> <span>03</span></li>
+        <li><strong>O Mapa da Trilha & Matriz de Domínio</strong> <span>04</span></li>
+        <li><strong>Capítulo 1: Desmistificando Git vs GitHub</strong> <span>05</span></li>
+        <li><strong>Capítulo 2: Configuração e Identidade Global</strong> <span>06</span></li>
+        <li><strong>Capítulo 3: A Santa Trindade dos 3 Estados e o 1º Commit</strong> <span>07</span></li>
+        <li><strong>Capítulo 4: A Máquina do Tempo (git log e git diff)</strong> <span>09</span></li>
+        <li><strong>Capítulo 5: O Guarda-Costas do Projeto (.gitignore)</strong> <span>10</span></li>
+        <li><strong>Capítulo 6: Conectando com a Nuvem (git remote e git push)</strong> <span>11</span></li>
+        <li><strong>Capítulo 7: Linhas do Tempo Paralelas (Branches e Merge Local)</strong> <span>12</span></li>
+        <li><strong>Capítulo 8: Trabalho em Equipe Profissional (Pull Requests e git pull)</strong> <span>14</span></li>
+        <li><strong>Capítulo 9: Segurança, No-Code e Prevenção de Código Malicioso</strong> <span>16</span></li>
+        <li><strong>Capítulo 10: O Guia Rápido de Bolso (Cheat Sheet Completo)</strong> <span>17</span></li>
+        <li><strong>Epílogo: Próximos Passos (Aula 09 e Conflitos de Merge)</strong> <span>18</span></li>
+      </ul>
+    </div>
+
+    <h2>Prefácio: Como este conhecimento foi construído</h2>
+    <p>
+      Este livro não é um manual acadêmico frio. Ele é o registro fidedigno de uma jornada real de aprendizagem. 
+      O aluno <strong>Vlaudimir Marques</strong> partiu do zero absoluto no terminal de comando do Mac e, através do método 
+      pedagógico ativo do <em>Professor IA</em>, progrediu aula por aula, digitando cada comando, inspecionando cada retorno, 
+      cometendo hipóteses, superando erros e consolidando modelos mentais profundos.
+    </p>
+    <p>
+      A grande lição deste guia é que o Git não é sobre decorar comandos mecânicos; é sobre <strong>entender o fluxo do tempo, 
+      o isolamento de riscos e a colaboração humana</strong>.
+    </p>
+
+    <div class="callout callout-tip">
+      <strong>🎯 Como usar este material para o seu futuro eBook:</strong>
+      Cada capítulo foi estruturado em quatro blocos pedagógicos essenciais:
+      (1) <em>A Intuição / Analogia</em>, (2) <em>O Mecanismo Técnico</em>, (3) <em>Os Comandos Práticos</em> e (4) <em>Dicas e Riscos a Evitar</em>. 
+      Use esse formato para criar um livro atraente e didático para outros profissionais e entusiastas!
+    </div>
+  </div>
+
+  <!-- MAPA DA TRILHA -->
+  <div class="chapter">
+    <h1 class="chapter-title">🗺️ Mapa da Trilha & Matriz de Domínio</h1>
+    
+    <p>Abaixo está o panorama oficial da evolução demonstrada nas Aulas 01 a 08:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nível</th>
+          <th>Módulo</th>
+          <th>Conceitos & Competências</th>
+          <th>Situação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Nível 1 — Fundamentos</strong></td>
+          <td>Módulo 01: Conceitos & Primeiros Passos</td>
+          <td>Controle de versões, Git local vs GitHub na nuvem, commits, repositórios e configuração de identidade.</td>
+          <td><span class="badge-status badge-mastered">Dominado</span></td>
+        </tr>
+        <tr>
+          <td><strong>Nível 2 — Iniciante Funcional</strong></td>
+          <td>Módulo 02: Ciclo de Vida Local & Histórico</td>
+          <td><code>git init</code>, <code>git status</code>, os 3 estados, <code>git add</code>, <code>git commit</code>, <code>git log</code>, <code>git diff</code>, <code>.gitignore</code>.</td>
+          <td><span class="badge-status badge-mastered">Dominado</span></td>
+        </tr>
+        <tr>
+          <td><strong>Nível 3 — Intermediário</strong></td>
+          <td>Módulo 03: Nuvem & Linhas do Tempo</td>
+          <td>Conexão remota (<code>git remote</code>), <code>git push</code>, branches (<code>git switch -c</code>), fusões locais (<code>git merge</code>), exclusão de galhos.</td>
+          <td><span class="badge-status badge-mastered">Dominado</span></td>
+        </tr>
+        <tr>
+          <td><strong>Nível 4 — Avançado</strong></td>
+          <td>Módulo 04: Colaboração & Boas Práticas</td>
+          <td>Feature branches remotas, Pull Requests (PRs), Code Review, fusão na nuvem, <code>git pull</code>, boas práticas de segurança e prevenção de malware.</td>
+          <td><span class="badge-status badge-progress">Em Andamento</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Matriz de Evidências Demonstradas</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Comando / Habilidade</th>
+          <th>Função Principal</th>
+          <th>Evidência Prática no Projeto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>git init</code></td>
+          <td>Cria o repositório e inicia a monitoria</td>
+          <td>Repositório <code>Skill_Teacher</code> criado com sucesso.</td>
+        </tr>
+        <tr>
+          <td><code>git status</code></td>
+          <td>Painel de bordo dos 3 estados</td>
+          <td>Identificou arquivos vermelhos (untracked/modified) e verdes (staged).</td>
+        </tr>
+        <tr>
+          <td><code>git add</code></td>
+          <td>Coloca as mudanças na Staging Area</td>
+          <td>Adicionou arquivos individuais e preparou commits oficiais.</td>
+        </tr>
+        <tr>
+          <td><code>git commit -m</code></td>
+          <td>Grava a foto oficial e permanente</td>
+          <td>Múltiplos commits registrados e rastreados na linha do tempo.</td>
+        </tr>
+        <tr>
+          <td><code>git diff</code></td>
+          <td>Mostra alterações exatas linha a linha</td>
+          <td>Inspecionou adições (<code>+</code>) e remoções (<code>-</code>) antes de comitar.</td>
+        </tr>
+        <tr>
+          <td><code>git remote / git push</code></td>
+          <td>Conecta e envia histórico à nuvem</td>
+          <td>Sincronizou repositório local com o GitHub remoto.</td>
+        </tr>
+        <tr>
+          <td><code>git switch -c</code></td>
+          <td>Cria e alterna para galho paralelo</td>
+          <td>Criou <code>teste-ideias</code> e <code>feat-ideia-projeto</code> em isolamento total.</td>
+        </tr>
+        <tr>
+          <td><strong>Pull Request (PR)</strong></td>
+          <td>Portão de inspeção e colaboração</td>
+          <td>Abriu, inspecionou e realizou merge do <strong>PR #1</strong> na interface web.</td>
+        </tr>
+        <tr>
+          <td><code>git pull</code></td>
+          <td>Puxa novidades da nuvem para o Mac</td>
+          <td>Trouxe a fusão do PR da nuvem de volta para a <code>main</code> local.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CAPÍTULO 1 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 1: Desmistificando Git vs GitHub</h1>
+    
+    <h2>1.1 A Confusão Mais Comum da Tecnologia</h2>
+    <p>
+      Para quem está começando, Git e GitHub parecem a mesma coisa. Mas confundi-los é como confundir o 
+      <strong>carro</strong> com a <strong>garagem</strong> ou uma <strong>câmera fotográfica</strong> com o <strong>Instagram</strong>.
+    </p>
+
+    <div class="callout callout-analogy">
+      <strong>📸 A Analogia da Fotografia:</strong>
+      <ul>
+        <li><strong>O Git é a Câmera Profissional:</strong> Funciona 100% offline. Você tira as fotos (commits), salva no seu próprio cartão de memória (disco rígido) e controla seu acervo sem precisar de internet.</li>
+        <li><strong>O GitHub é a Galeria na Nuvem / Rede Social:</strong> É o site onde você sobe as fotos da sua câmera para compartilhar com a equipe, expor seu trabalho, fazer backup seguro e receber comentários.</li>
+      </ul>
+    </div>
+
+    <h2>1.2 O que é o Git?</h2>
+    <p>
+      O <strong>Git</strong> é um sistema de controle de versão distribuído criado em 2005 por Linus Torvalds. 
+      Sua principal função é atuar como uma <strong>máquina do tempo</strong> para arquivos de texto e código. 
+      Ele não "roda" seus programas; ele vigia e registra minuciosamente o que mudou, quem mudou, quando mudou e por que mudou.
+    </p>
+
+    <h2>1.3 O que é o GitHub?</h2>
+    <p>
+      O <strong>GitHub</strong> é uma plataforma de hospedagem em nuvem que utiliza o Git por trás dos panos. 
+      Além de guardar seu código com segurança em servidores globais, ele adiciona uma camada gráfica rica de 
+      colaboração: acompanhamento de tarefas (Issues), revisão de código (Pull Requests), automações (GitHub Actions) 
+      e páginas públicas (GitHub Pages).
+    </p>
+  </div>
+
+  <!-- CAPÍTULO 2 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 2: Configuração e Identidade Global</h1>
+    
+    <h2>2.1 Por que o Git exige que você assine seus trabalhos?</h2>
+    <p>
+      Em um projeto profissional com 10 ou 100 colaboradores, o Git precisa saber exatamente quem escreveu cada linha de código. 
+      Se um erro for introduzido ou uma funcionalidade incrível for criada, o sistema precisa associar essa autoria a um nome e a um e-mail válidos.
+    </p>
+
+    <h2>2.2 Os Comandos de Identidade</h2>
+    <p>Antes de fazer o primeiro commit em qualquer computador novo, configuramos nossa identidade global:</p>
+
+    <pre>
+<span class="comment"># 1. Configurar o seu nome público de autor</span>
+<span class="cmd">git config</span> <span class="flag">--global</span> user.name <span class="str">"Vlaudimir Marques"</span>
+
+<span class="comment"># 2. Configurar o seu e-mail (o mesmo vinculado à sua conta do GitHub)</span>
+<span class="cmd">git config</span> <span class="flag">--global</span> user.email <span class="str">"vlaudimirdm@gmail.com"</span>
+
+<span class="comment"># 3. Conferir se tudo foi gravado corretamente</span>
+<span class="cmd">git config</span> <span class="flag">--list</span>
+    </pre>
+
+    <div class="callout callout-tip">
+      <strong>💡 Dica de Ouro:</strong> A flag <code>--global</code> significa que essas informações valerão para todos os repositórios 
+      que você criar neste computador. Se em algum projeto específico da empresa você precisar usar um e-mail corporativo diferente, 
+      basta rodar o mesmo comando dentro da pasta do projeto sem a palavra <code>--global</code>.
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 3 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 3: A Santa Trindade dos 3 Estados</h1>
+    
+    <h2>3.1 Como o Git Enxerga o Seu Projeto</h2>
+    <p>
+      Diferente de um arquivo salvo no Word ou no Google Docs (onde você digita e tudo é salvo na mesma hora), o Git possui um 
+      processo deliberado em três etapas. Ele nunca grava nada de surpresa:
+    </p>
+
+    <div class="callout callout-analogy">
+      <strong>🎭 A Analogia do Teatro e da Foto Oficial:</strong>
+      <ol>
+        <li><strong>Working Directory (Os Bastidores / Camarim):</strong> É a sua pasta de trabalho normal no computador. Você edita, cria e deleta arquivos. O Git sabe que algo mudou, mas nada está preparado ainda. <em>(No terminal, esses arquivos aparecem em <strong>VERMELHO</strong>)</em>.</li>
+        <li><strong>Staging Area (O Palco da Foto):</strong> Você chama para o palco apenas os atores (arquivos) que devem sair na foto oficial agora. <em>(No terminal, esses arquivos aparecem em <strong>VERDE</strong> após o comando <code>git add</code>)</em>.</li>
+        <li><strong>Repository (O Álbum de Família Oficial):</strong> Você clica na câmera fotográfica. O Git tira a foto dos arquivos que estavam no palco e registra para sempre na linha do tempo com uma mensagem explicativa (<code>git commit</code>).</li>
+      </ol>
+    </div>
+
+    <h2>3.2 Os Comandos Fundamentais</h2>
+    <pre>
+<span class="comment"># Inicializar o repositório na pasta atual</span>
+<span class="cmd">git init</span>
+
+<span class="comment"># Checar o painel de bordo a qualquer momento</span>
+<span class="cmd">git status</span>
+
+<span class="comment"># Enviar um arquivo específico para o palco (Staging)</span>
+<span class="cmd">git add</span> ideias.txt
+
+<span class="comment"># Enviar TODOS os arquivos modificados para o palco</span>
+<span class="cmd">git add .</span>
+
+<span class="comment"># Tirar a foto oficial com uma mensagem descritiva</span>
+<span class="cmd">git commit</span> <span class="flag">-m</span> <span class="str">"feat: primeiro commit oficial do projeto"</span>
+    </pre>
+
+    <h2>3.3 Superando o Editor Vim no Terminal</h2>
+    <p>
+      Se por acidente você esquecer a flag <code>-m "mensagem"</code> e digitar apenas <code>git commit</code>, o Git abrirá um 
+      editor dentro do terminal (frequentemente o clássico <strong>Vim</strong>). 
+    </p>
+    <p>
+      Para sair dele sem desespero:
+      1. Aperte a tecla <code>Esc</code>;
+      2. Digite <code>:wq</code> (que significa <em>Write and Quit</em> / Salvar e Sair);
+      3. Aperte <code>Enter</code>!
+    </p>
+  </div>
+
+  <!-- CAPÍTULO 4 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 4: A Máquina do Tempo (log e diff)</h1>
+    
+    <h2>4.1 Inspecionando o Passado: O Histórico</h2>
+    <p>
+      Como navegar pela linha do tempo para ver o que já foi construído? Usamos a família de comandos <code>git log</code>:
+    </p>
+
+    <pre>
+<span class="comment"># Visualização resumida e elegante (uma linha por commit)</span>
+<span class="cmd">git log</span> <span class="flag">--oneline</span>
+
+<span class="out">3bf24f2 Merge pull request #1 from vlaudimirdm-ship-it/feat-ideia-projeto
+37211f6 feat: adiciona propostas de projetos praticos
+e9c9da7 docs: atualiza registro da aula 07 no template de progresso
+8c9c003 feat: adiciona anotacoes na branch de teste
+cdb6cef Primeiro commit</span>
+    </pre>
+
+    <div class="callout callout-tip">
+      <strong>🔑 O que são os códigos estranhos (ex: <code>3bf24f2</code>)?</strong>
+      Eles são chamados de <strong>Hashes SHA-1</strong>. Cada commit recebe uma impressão digital matemática única no universo. 
+      Com esse código de 7 caracteres, você pode apontar para aquele momento exato da história e inspecionar ou restaurar arquivos como estavam naquele segundo.
+    </div>
+
+    <h2>4.2 Enxergando Linha por Linha com <code>git diff</code></h2>
+    <p>
+      Enquanto o <code>git status</code> apenas te dá o "índice" de quais arquivos foram tocados, o <strong><code>git diff</code></strong> 
+      abre o microscópio e revela as entranhas da alteração:
+    </p>
+    <ul>
+      <li>Linhas iniciadas com <strong style="color:#16a34a;">+ (verde)</strong>: foram adicionadas;</li>
+      <li>Linhas iniciadas com <strong style="color:#dc2626;">- (vermelho)</strong>: foram deletadas ou substituídas.</li>
+    </ul>
+  </div>
+
+  <!-- CAPÍTULO 5 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 5: O Guarda-Costas do Projeto (.gitignore)</h1>
+    
+    <h2>5.1 O Perigo de Versionar Arquivos Indesejados</h2>
+    <p>
+      Em qualquer sistema operacional, existem arquivos temporários que não fazem parte do seu trabalho. 
+      No Mac, por exemplo, o sistema cria silenciosamente arquivos chamados <code>.DS_Store</code> em todas as pastas para guardar ícones e posições de janelas. 
+      Em projetos de programação, existem pastas pesadíssimas como <code>node_modules/</code> ou senhas gravadas em arquivos <code>.env</code>.
+    </p>
+    <p>
+      Se você comitar esses arquivos e enviar para a nuvem, você pode travar o repositório ou vazar credenciais sigilosas!
+    </p>
+
+    <h2>5.2 Como Funciona o <code>.gitignore</code></h2>
+    <p>
+      O <code>.gitignore</code> é um arquivo de texto simples colocado na raiz do seu projeto. 
+      Cada linha dele é uma ordem expressa para o Git: <em>"Finja que esses arquivos não existem!"</em>.
+    </p>
+
+    <pre>
+<span class="comment"># Exemplo de conteúdo de um .gitignore</span>
+.DS_Store          <span class="comment"># Ignora lixo de sistema do macOS</span>
+*.log              <span class="comment"># Ignora qualquer arquivo que termine com .log</span>
+senhas.txt         <span class="comment"># Ignora arquivos com chaves confidenciais</span>
+node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas</span>
+    </pre>
+
+    <div class="callout callout-warning">
+      <strong>⚠️ Regra Crítica:</strong> Crie o <code>.gitignore</code> <strong>no início do projeto</strong>! 
+      Se você já tiver commitado um arquivo antes de colocá-lo no <code>.gitignore</code>, o Git continuará rastreando-o até que você o remova explicitamente do índice.
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 6 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 6: Conectando com a Nuvem (Push Remoto)</h1>
+    
+    <h2>6.1 O Conceito de Repositório Remoto (Remote)</h2>
+    <p>
+      Até a Aula 05, seu projeto existia exclusivamente dentro do seu Mac. Para levá-lo ao GitHub, precisamos criar uma "ponte" 
+      entre o seu computador e o servidor na nuvem. Essa ponte se chama <strong>Remote</strong>.
+    </p>
+    <p>
+      Por convenção universal, o servidor principal recebe o apelido carinhoso de <strong><code>origin</code></strong>.
+    </p>
+
+    <h2>6.2 Os Comandos de Conexão e Envio</h2>
+    <pre>
+<span class="comment"># 1. Vincular a pasta local ao endereço do repositório no GitHub</span>
+<span class="cmd">git remote add origin</span> https://github.com/vlaudimirdm-ship-it/Skill_Teacher.git
+
+<span class="comment"># 2. Conferir se a conexão está apontando para o lugar certo</span>
+<span class="cmd">git remote</span> <span class="flag">-v</span>
+
+<span class="comment"># 3. Fazer o primeiro envio e configurar o rastreamento automático</span>
+<span class="cmd">git push</span> <span class="flag">-u origin main</span>
+    </pre>
+
+    <div class="callout callout-tip">
+      <strong>💡 O que significa a flag <code>-u</code>?</strong>
+      Significa <em>Upstream</em> (Rastreamento). Ela cria um fio invisível dizendo: 
+      <em>"A partir de hoje, a branch main deste Mac conversa diretamente com a branch main lá do GitHub origin"</em>. 
+      Nas próximas vezes, basta você digitar simplesmente <code>git push</code>!
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 7 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 7: Linhas do Tempo Paralelas (Branches)</h1>
+    
+    <h2>7.1 O que é uma Branch?</h2>
+    <p>
+      A palavra <strong>Branch</strong> significa <strong>Galho</strong> ou <strong>Ramificação</strong>. 
+      Ela é a capacidade do Git de clonar a linha do tempo para que você trabalhe em uma cópia paralela e segura sem encostar na versão oficial (<code>main</code>).
+    </p>
+
+    <div class="callout callout-analogy">
+      <strong>📄 A Analogia do Cardápio do Restaurante:</strong>
+      <ul>
+        <li><strong>A <code>main</code> é o Cardápio Oficial:</strong> Está impresso e nas mãos dos clientes. Não se deve rabiscar ou fazer testes nele.</li>
+        <li><strong>A <code>branch</code> é a Xerox de Rascunho:</strong> Você tira uma xerox do cardápio e vai para os fundos da cozinha testar receitas novas. Se der errado, joga no lixo. Se der certo, copia para o cardápio oficial!</li>
+      </ul>
+    </div>
+
+    <h2>7.2 Branch vs Ambiente Virtual: Uma Distinção Vital</h2>
+    <p>
+      Muitos profissionais confundem esses dois conceitos porque ambos usam o verbo "isolar":
+    </p>
+    <ul>
+      <li><strong>Branch do Git:</strong> Isola o <strong>TEXTO e o CÓDIGO</strong> dos arquivos.</li>
+      <li><strong>Ambiente Virtual (ex: venv do Python, Docker):</strong> Isola os <strong>PROGRAMAS e BIBLIOTECAS</strong> instalados no computador.</li>
+    </ul>
+
+    <h2>7.3 O Ciclo Local de Branches</h2>
+    <pre>
+<span class="comment"># Listar as branches existentes</span>
+<span class="cmd">git branch</span>
+
+<span class="comment"># Criar uma branch nova e já entrar nela (-c de create)</span>
+<span class="cmd">git switch</span> <span class="flag">-c</span> teste-ideias
+
+<span class="comment"># Voltar em segurança para a branch principal</span>
+<span class="cmd">git switch</span> main
+
+<span class="comment"># Trazer as novidades da branch paralela para a main (Merge)</span>
+<span class="cmd">git merge</span> teste-ideias
+    </pre>
+  </div>
+
+  <!-- CAPÍTULO 8 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 8: Trabalho em Equipe Profissional (Pull Requests)</h1>
+    
+    <h2>8.1 Por que Equipes não Fazem Merge Direto na Main?</h2>
+    <p>
+      Em um projeto individual, fazer <code>git merge</code> na sua máquina e dar <code>git push</code> funciona. 
+      Mas em equipes de tecnologia, isso geraria um <strong>atropelamento de trens</strong>: alguém subiria código com bug que derrubaria o sistema para todos os outros colegas.
+    </p>
+    <p>
+      A solução universal da indústria é o <strong>Pull Request (PR)</strong>.
+    </p>
+
+    <h2>8.2 O que é o Pull Request (PR)?</h2>
+    <p>
+      Traduzindo ao pé da letra: <strong>"Pedido formal para puxar"</strong>. É quando você diz ao seu time:
+      <em>"Pessoal, criei este galho isolado na nuvem. Revisem minhas alterações. Se estiver tudo aprovado, puxem para a main!"</em>.
+    </p>
+
+    <h2>8.3 O Ciclo Completo de Colaboração (O que fizemos na Aula 08)</h2>
+
+    <pre>
+<span class="comment"># 1. No Mac: Criar a branch de funcionalidade</span>
+<span class="cmd">git switch</span> <span class="flag">-c</span> feat-ideia-projeto
+
+<span class="comment"># 2. No Mac: Fazer a melhoria e comitar na branch</span>
+<span class="cmd">git add</span> ideias.txt
+<span class="cmd">git commit</span> <span class="flag">-m</span> <span class="str">"feat: adiciona propostas de projetos praticos"</span>
+
+<span class="comment"># 3. Enviar APENAS o galho para o GitHub (sem tocar na main)</span>
+<span class="cmd">git push</span> <span class="flag">-u origin</span> feat-ideia-projeto
+
+<span class="comment"># 4. Na Web (GitHub): Abrir o Pull Request #1 e clicar em "Merge pull request"</span>
+
+<span class="comment"># 5. No Mac: Voltar para a main</span>
+<span class="cmd">git switch</span> main
+
+<span class="comment"># 6. No Mac: PUXAR as novidades da nuvem para o seu computador!</span>
+<span class="cmd">git pull origin main</span>
+
+<span class="comment"># 7. No Mac: Deletar o galho que já foi incorporado</span>
+<span class="cmd">git branch</span> <span class="flag">-d</span> feat-ideia-projeto
+    </pre>
+
+    <div class="callout callout-tip">
+      <strong>📦 Mnemônico da Caixa (Nunca mais confunda Push e Pull):</strong>
+      <ul>
+        <li><strong>PUSH (Empurrar):</strong> Você empurra a caixa de alterações do seu Mac para cima da estante (GitHub).</li>
+        <li><strong>PULL (Puxar):</strong> Você puxa a caixa de alterações de cima da estante (GitHub) para o seu Mac.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 9 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 9: Segurança, No-Code e Prevenção de Malware</h1>
+    
+    <h2>9.1 O Dilema de Segurança no Mundo No-Code</h2>
+    <p>
+      Se você trabalha com ferramentas No-Code, automações ou está iniciando em programação, pode surgir a dúvida: 
+      <em>"Como me protejo se alguém tentar mandar um código malicioso ou vírus disfarçado de contribuição no GitHub?"</em>.
+    </p>
+
+    <div class="callout callout-security">
+      <strong>🛡️ A Chave do Castelo é Sempre Sua:</strong>
+      No Git e GitHub, ninguém tem o poder de injetar código na sua versão oficial sem que <strong>você clique voluntariamente em autorizar</strong>. 
+      O código de terceiros fica em quarentena na aba do Pull Request aguardando seu veredito.
+    </div>
+
+    <h2>9.2 Os 4 Sinais Vermelhos na Aba *Files Changed*</h2>
+    <p>Antes de clicar em <em>Merge</em> em qualquer contribuição de terceiros, abra a aba <strong>Files changed</strong> e observe:</p>
+    <ul>
+      <li><strong>Arquivos Executáveis ou Ocultos:</strong> Desconfie na hora se o PR adicionou arquivos como <code>.exe</code>, <code>.bat</code>, <code>.sh</code>, <code>.bin</code> ou arquivos zipados. Projetos colaborativos normais só compartilham código-fonte legível.</li>
+      <li><strong>Scripts que Baixam Coisas da Internet:</strong> Verifique se há comandos tentando fazer download silencioso de URLs desconhecidas.</li>
+      <li><strong>Typosquatting de Bibliotecas:</strong> Preste atenção em nomes de pacotes adicionados que imitam bibliotecas famosas com erros sutis de digitação (ex: <code>requsets</code> em vez de <code>requests</code>).</li>
+      <li><strong>Código Ilegível / Ofuscado:</strong> Blocos de texto que parecem códigos criptografados sem explicação lógica são clássicos de injeção maliciosa.</li>
+    </ul>
+
+    <h2>9.3 A IA como sua Perita de Segurança</h2>
+    <p>
+      Não precisa ser um hacker para se defender. Você pode simplesmente copiar o código que a pessoa sugeriu na aba <em>Files changed</em>, 
+      abrir sua IA de confiança e pedir:
+    </p>
+    <div class="callout callout-tip">
+      <em>"Analise esse código que recebi em um Pull Request. Há alguma tentativa de roubo de senhas, instalação de vírus, comandos de terminal perigosos ou vulnerabilidades aqui?"</em>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 10 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 10: O Guia Rápido de Bolso (Cheat Sheet)</h1>
+    
+    <p>Guarde esta tabela. Ela contém os comandos essenciais na ordem em que você os utilizará no seu dia a dia profissional:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Comando Git</th>
+          <th>O que ele faz?</th>
+          <th>Quando utilizar?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>git status</code></td>
+          <td>Mostra o estado atual dos arquivos</td>
+          <td>A qualquer momento, para saber o que está modificado ou pronto.</td>
+        </tr>
+        <tr>
+          <td><code>git diff</code></td>
+          <td>Mostra as linhas exatas adicionadas e removidas</td>
+          <td>Antes de comitar, para revisar o que você realmente alterou.</td>
+        </tr>
+        <tr>
+          <td><code>git add &lt;arquivo&gt;</code></td>
+          <td>Move o arquivo para o palco (Staging)</td>
+          <td>Quando você preparou uma alteração e quer incluí-la no commit.</td>
+        </tr>
+        <tr>
+          <td><code>git commit -m "msg"</code></td>
+          <td>Grava a foto oficial permanente no histórico</td>
+          <td>Sempre que concluir uma pequena unidade lógica de trabalho.</td>
+        </tr>
+        <tr>
+          <td><code>git log --oneline</code></td>
+          <td>Exibe a linha do tempo resumida dos commits</td>
+          <td>Para auditar o histórico e ver os identificadores (hashes).</td>
+        </tr>
+        <tr>
+          <td><code>git switch -c &lt;nome&gt;</code></td>
+          <td>Cria um galho novo e já pula para dentro dele</td>
+          <td>Sempre antes de começar a programar uma ideia ou funcionalidade.</td>
+        </tr>
+        <tr>
+          <td><code>git switch &lt;nome&gt;</code></td>
+          <td>Alterna entre galhos existentes</td>
+          <td>Para voltar para a <code>main</code> ou inspecionar outra branch.</td>
+        </tr>
+        <tr>
+          <td><code>git push -u origin &lt;branch&gt;</code></td>
+          <td>Publica a branch isolada no GitHub</td>
+          <td>Quando você terminar a tarefa e quiser abrir um Pull Request.</td>
+        </tr>
+        <tr>
+          <td><code>git pull origin main</code></td>
+          <td>Puxa as novidades da nuvem para o Mac</td>
+          <td>Depois de aprovar um PR no GitHub ou ao iniciar o dia de trabalho.</td>
+        </tr>
+        <tr>
+          <td><code>git branch -d &lt;nome&gt;</code></td>
+          <td>Deleta o galho local com segurança</td>
+          <td>Depois que o merge já tiver sido concluído e sincronizado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- EPÍLOGO -->
+  <div class="chapter">
+    <h1 class="chapter-title">Epílogo: Próximos Passos (Aula 09)</h1>
+    
+    <h2>O Que Nos Espera: O Conflito de Merge!</h2>
+    <p>
+      Até agora, todas as fusões que realizamos foram suaves e automáticas (o chamado <em>Fast-Forward</em> ou merge limpo do GitHub). 
+      Isso aconteceu porque ninguém mexeu na mesma linha que você ao mesmo tempo.
+    </p>
+    <p>
+      Mas o que acontece quando:
+    </p>
+    <ul>
+      <li>O <strong>Desenvolvedor A</strong> altera a linha 5 do arquivo para dizer: <em>"Cor de fundo: Azul"</em>;</li>
+      <li>E simultaneamente o <strong>Desenvolvedor B</strong> altera a mesma linha 5 para dizer: <em>"Cor de fundo: Verde"</em>?</li>
+    </ul>
+
+    <p>
+      O Git não é adivinho. Ele não pode chutar qual das duas ideias é a correta. 
+      Ele para o processo, levanta uma bandeira e diz: <strong>CONFLITO DE MERGE!</strong>
+    </p>
+    <p>
+      Na <strong>Aula 09</strong>, vamos provocar um conflito intencional de merge, inspecionar os marcadores de conflito 
+      (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) e aprender a resolvê-lo 
+      com calma, elegância e segurança profissional.
+    </p>
+
+    <div class="callout callout-tip" style="text-align: center; margin-top: 30px;">
+      <strong>Fim da Parte I — Do Zero ao Avançado</strong><br>
+      <em>"O domínio não vem da memorização de comandos, mas da compreensão da linha do tempo."</em>
+    </div>
+  </div>
+
+</body>
+</html>
