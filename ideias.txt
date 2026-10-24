@@ -1,5 +1,5 @@
 Minhas anotacoes secretas e ideias de projeto
 
 ## Ideias de Projetos Praticos
-- Projeto 01: Criar um portfólio profissional no GitHub com documentação completa.
+- - Projeto 01: Dashboard de Inteligência Artificial para análise preditiva.
 - Projeto 02: Pipeline automatizada com GitHub Actions.
