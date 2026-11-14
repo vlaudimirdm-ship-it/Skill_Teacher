@@ -391,9 +391,10 @@
         <li><strong>Capítulo 7: Linhas do Tempo Paralelas (Branches e Merge Local)</strong> <span>12</span></li>
         <li><strong>Capítulo 8: Trabalho em Equipe Profissional (Pull Requests e git pull)</strong> <span>14</span></li>
         <li><strong>Capítulo 9: O Bicho-Papão Desmistificado (Conflitos de Merge)</strong> <span>16</span></li>
-        <li><strong>Capítulo 10: Segurança, No-Code e Prevenção de Código Malicioso</strong> <span>18</span></li>
-        <li><strong>Capítulo 11: O Guia Rápido de Bolso (Cheat Sheet Completo)</strong> <span>19</span></li>
-        <li><strong>Epílogo: Próximos Passos (Aula 10: Git Flow e Convenções)</strong> <span>20</span></li>
+        <li><strong>Capítulo 10: Colaboração de Alto Nível (Issues, Conventional Commits e Workflows)</strong> <span>18</span></li>
+        <li><strong>Capítulo 11: Segurança, No-Code e Prevenção de Código Malicioso</strong> <span>20</span></li>
+        <li><strong>Capítulo 12: O Guia Rápido de Bolso (Cheat Sheet Completo)</strong> <span>21</span></li>
+        <li><strong>Epílogo: Próximos Passos (Nível 5: Stash, Rebase e CI/CD)</strong> <span>22</span></li>
       </ul>
     </div>
 
@@ -927,9 +928,86 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
 
   <!-- CAPÍTULO 10 -->
   <div class="chapter">
-    <h1 class="chapter-title">Capítulo 10: Segurança, No-Code e Prevenção de Malware</h1>
+    <h1 class="chapter-title">Capítulo 10: Colaboração de Alto Nível (Issues, Conventional Commits e Workflows)</h1>
     
-    <h2>10.1 O Dilema de Segurança no Mundo No-Code</h2>
+    <h2>10.1 Da Oficina Caótica à Linha de Montagem de Alta Precisão</h2>
+    <p>
+      Quando você programa sozinho, qualquer nome de commit como <em>"ajustes rápidos"</em> ou salvar tudo direto na <code>main</code> 
+      parece inofensivo. No entanto, quando duas ou duzentas pessoas colaboram no mesmo repositório, o caos se instala sem regras claras de trânsito.
+    </p>
+    <p>
+      Neste capítulo, cobrimos as três convenções universais adotadas por grandes empresas de tecnologia (como Google, Meta e startups globais) 
+      para manter a colaboração fluida, transparente e à prova de desastres.
+    </p>
+
+    <h2>10.2 Gestão de Demandas: GitHub Issues</h2>
+    <p>
+      As <strong>Issues</strong> no GitHub são o sistema integrado de ordens de serviço (tickets). Elas registram três tipos essenciais de tarefas:
+    </p>
+    <ul>
+      <li>🐛 <strong>Bugs:</strong> Relatos detalhados de erros, passos para reproduzir e comportamento esperado.</li>
+      <li>✨ <strong>Novas Funcionalidades (Features):</strong> Propostas de valor e especificação do que o sistema deve fazer.</li>
+      <li>📋 <strong>Tarefas Técnicas & Documentação:</strong> Manutenção de ambiente, melhorias de desempenho ou atualização de guias.</li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <strong>⚡ A Automação Mágica: Fechamento por Palavras-Chave</strong>
+      Quando você inclui no seu commit ou na descrição do Pull Request expressões como:
+      <code>Closes #2</code>, <code>Fixes #15</code> ou <code>Resolves #8</code>, 
+      o GitHub reconhece a intenção automaticamente. No exato instante em que o Pull Request for mesclado na branch principal, 
+      a Issue correspondente é <strong>fechada automaticamente</strong>, poupando trabalho manual e mantendo o quadro sempre atualizado.
+    </div>
+
+    <h2>10.3 O Padrão Universal: Conventional Commits</h2>
+    <p>
+      Em vez de mensagens vagas, engenheiros profissionais adotam a especificação do <strong>Conventional Commits</strong>, 
+      que transforma o histórico em uma trilha de auditoria limpa e legível tanto por humanos quanto por robôs de geração automática de changelog:
+    </p>
+
+    <pre>
+tipo(escopo opcional): descrição objetiva no presente do indicativo
+
+<span class="comment"># Exemplos práticos do dia a dia:</span>
+feat(auth): implementar login com conta Google
+fix(checkout): corrigir cálculo de frete para compras acima de R$ 200
+docs(workflow): adicionar guia de colaboracao e conventional commits (closes #2)
+refactor(database): simplificar consulta SQL sem alterar regras de negócio
+chore(deps): atualizar dependências de bibliotecas de segurança
+    </pre>
+
+    <h2>10.4 O Arquivo Sagrado: <code>CONTRIBUTING.md</code></h2>
+    <p>
+      Em projetos profissionais e de código aberto (Open Source), o arquivo <code>CONTRIBUTING.md</code> é o cartão de visitas que orienta 
+      qualquer novo desenvolvedor sobre como abrir branches, como escrever mensagens de commit e como submeter Pull Requests.
+    </p>
+
+    <h2>10.5 Estratégias de Branch: GitHub Flow vs Git Flow</h2>
+    <p>Existem dois modelos mentais consagrados para gerenciar o tráfego de código:</p>
+    <ul>
+      <li>
+        <strong>GitHub Flow (Ágil e Contínuo):</strong> Adotado na maioria dos produtos web e startups. 
+        A branch <code>main</code> está sempre pronta para ir ao ar. Cria-se uma branch temática rápida (ex: <code>feat/modo-escuro</code>), 
+        abre-se o Pull Request, revisa-se, mescla-se na <code>main</code> e deleta-se o galho.
+      </li>
+      <li>
+        <strong>Git Flow (Robusto e Versionado):</strong> Usado em softwares clássicos que lançam versões rígidas (ex: v1.0, v2.0, apps de banco). 
+        Mantém duas branches infinitas (<code>main</code> para produção e <code>develop</code> para laboratório), além de ramos específicos 
+        para novas versões (<code>release/*</code>) e correções emergenciais diretas na produção (<code>hotfix/*</code>).
+      </li>
+    </ul>
+
+    <div class="callout callout-analogy">
+      <strong>🌟 Síntese da Aula 10 por Vlaudimir Marques:</strong>
+      A abertura da <em>Issue #2</em>, a criação da branch temática <code>docs/regras-colaboracao</code>, a elaboração do <code>CONTRIBUTING.md</code>, 
+      o commit padronizado com <code>closes #2</code> e o merge do PR #3 fecharam o ciclo completo da engenharia colaborativa com maestria!
+    </div>
+  </div>
+
+  <!-- CAPÍTULO 11 -->
+  <div class="chapter">
+    <h1 class="chapter-title">Capítulo 11: Segurança, No-Code e Prevenção de Malware</h1>
+    
+    <h2>11.1 O Dilema de Segurança no Mundo No-Code</h2>
     <p>
       Se você trabalha com ferramentas No-Code, automações ou está iniciando em programação, pode surgir a dúvida: 
       <em>"Como me protejo se alguém tentar mandar um código malicioso ou vírus disfarçado de contribuição no GitHub?"</em>.
@@ -941,7 +1019,7 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
       O código de terceiros fica em quarentena na aba do Pull Request aguardando seu veredito.
     </div>
 
-    <h2>10.2 Os 4 Sinais Vermelhos na Aba *Files Changed*</h2>
+    <h2>11.2 Os 4 Sinais Vermelhos na Aba *Files Changed*</h2>
     <p>Antes de clicar em <em>Merge</em> em qualquer contribuição de terceiros, abra a aba <strong>Files changed</strong> e observe:</p>
     <ul>
       <li><strong>Arquivos Executáveis ou Ocultos:</strong> Desconfie na hora se o PR adicionou arquivos como <code>.exe</code>, <code>.bat</code>, <code>.sh</code>, <code>.bin</code> ou arquivos zipados. Projetos colaborativos normais só compartilham código-fonte legível.</li>
@@ -950,7 +1028,7 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
       <li><strong>Código Ilegível / Ofuscado:</strong> Blocos de texto que parecem códigos criptografados sem explicação lógica são clássicos de injeção maliciosa.</li>
     </ul>
 
-    <h2>10.3 A IA como sua Perita de Segurança</h2>
+    <h2>11.3 A IA como sua Perita de Segurança</h2>
     <p>
       Não precisa ser um hacker para se defender. Você pode simplesmente copiar o código que a pessoa sugeriu na aba <em>Files changed</em>, 
       abrir sua IA de confiança e pedir:
@@ -960,9 +1038,9 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
     </div>
   </div>
 
-  <!-- CAPÍTULO 11 -->
+  <!-- CAPÍTULO 12 -->
   <div class="chapter">
-    <h1 class="chapter-title">Capítulo 11: O Guia Rápido de Bolso (Cheat Sheet Completo)</h1>
+    <h1 class="chapter-title">Capítulo 12: O Guia Rápido de Bolso (Cheat Sheet Completo)</h1>
     
     <p>Guarde esta tabela. Ela contém os comandos essenciais na ordem em que você os utilizará no seu dia a dia profissional:</p>
 
@@ -1046,25 +1124,26 @@ node_modules/      <span class="comment"># Ignora pastas inteiras de bibliotecas
 
   <!-- EPÍLOGO -->
   <div class="chapter">
-    <h1 class="chapter-title">Epílogo: Próximos Passos (Aula 10)</h1>
+    <h1 class="chapter-title">Epílogo: Próximos Passos (Nível 5 — Especialização)</h1>
     
-    <h2>O Que Nos Espera: Boas Práticas e Git Flow Profissional</h2>
+    <h2>O Que Nos Espera no Nível 5: O Toque dos Mestres</h2>
     <p>
-      Com a conclusão da Aula 09, você dominou toda a mecânica essencial do Git: 
-      criação, versionamento, sincronização em nuvem, Pull Requests, Code Review e Resolução de Conflitos.
+      Com as Aulas 01 a 10 concluídas, você dominou os quatro primeiros níveis da maestria em Git e GitHub: 
+      desde a inicialização do repositório até fluxos avançados de equipe, resolução de conflitos e governança com Issues e Pull Requests.
     </p>
     <p>
-      Na <strong>Aula 10</strong>, vamos aprender como os times profissionais organizam a casa para trabalhar em larga escala:
+      No <strong>Nível 5 (Especialização e Criação)</strong>, você aprenderá recursos de alta sofisticação técnica:
     </p>
     <ul>
-      <li><strong>Conventional Commits:</strong> Como padronizar mensagens para que qualquer sênior ou robô entenda o histórico (ex: <code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>refactor:</code>, <code>chore:</code>);</li>
-      <li><strong>Gestão com Issues no GitHub:</strong> Como abrir chamados, documentar bugs e planejar tarefas usando cartões visuais conectados aos Pull Requests;</li>
-      <li><strong>O Modelo Git Flow:</strong> Como empresas organizam galhos de desenvolvimento (<code>develop</code>), funcionalidades (<code>feature/*</code>), correções urgentes (<code>hotfix/*</code>) e versões oficiais de produção (<code>main</code>).</li>
+      <li><strong>Git Stash (A Gaveta Secreta):</strong> Como guardar modificações incompletas para trocar de branch instantaneamente sem precisar comitar código pela metade;</li>
+      <li><strong>Git Rebase:</strong> A técnica para linearizar históricos ramificados e manter uma linha do tempo perfeitamente reta e limpa;</li>
+      <li><strong>GitHub Actions (CI/CD):</strong> Como automatizar testes, validações e deploys sempre que um commit for enviado para o GitHub;</li>
+      <li><strong>Portfólio Profissional:</strong> Como criar um perfil estelar no GitHub (README de Perfil, badges, métricas e projetos vitrine).</li>
     </ul>
 
     <div class="callout callout-tip" style="text-align: center; margin-top: 30px;">
-      <strong>Fim da Lição 09 — Do Zero ao Avançado</strong><br>
-      <em>"O domínio não vem da memorização de comandos, mas da compreensão da linha do tempo e do respeito à colaboração."</em>
+      <strong>Fim da Lição 10 — Nível 4 Concluído com Sucesso!</strong><br>
+      <em>"A maestria profissional em engenharia de software não se mede apenas pela complexidade do código escrito, mas pela elegância, clareza e previsibilidade com que a equipe colabora."</em>
     </div>
   </div>
 
